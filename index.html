@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/site.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>Pokemon app</title>
+  </head>
+  <body>
+    <div id="root">
+      <header class="header">
+        <h1>Pokemon App</h1>
+      </header>
+      <div class="wrapper">
+        <div class="container">
+          <div class="list__wrapper">
+            <div class="list"></div>
+          </div>
+          <div class="data">
+            <h3 class="data-header">Pick a pokemon to see its specs</h3>
+            <div class="data__image-silhouette">
+              <img src="./assets/images/silhouette.png" class="silhouette" />
+            </div>
+            <div class="stats"></div>
+          </div>
+        </div>
+        <ul class="pagination"></ul>
+      </div>
+    </div>
+    <div class="modal-container" data-modal-container>
+      <div class="modal" data-modal>
+        <button type="button" data-close-modal>Close</button>
+        <div class="modal-data"></div>
+      </div>
+    </div>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
