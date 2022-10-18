@@ -198,7 +198,7 @@ const getEvolutions = ({ evolves_to }, evolutions = []) => {
 };
 
 const fetchEvolutions = async (id) => {
-  const URL = `${API}/evolution-chain/${id}`;
+  const URL = `${API}/pokemon-species/${id}`;
 
   const res = await fetch(`${URL}`);
 
@@ -207,7 +207,9 @@ const fetchEvolutions = async (id) => {
       throw new Error('Something went wrong...');
     }
 
-    const pokemons = await res.json();
+    const { evolution_chain } = await res.json();
+    const evolutionRes = await fetch(evolution_chain.url);
+    const pokemons = await evolutionRes.json();
     const evolutionArray = getEvolutions(pokemons.chain);
     handleEvolutions(evolutionArray);
   } catch (error) {
