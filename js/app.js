@@ -1,6 +1,6 @@
-const API = 'https://pokeapi.co/api/v2';
-const list = document.querySelector('.list');
-const data = document.querySelector('.data');
+const API = "https://pokeapi.co/api/v2";
+const list = document.querySelector(".list");
+const data = document.querySelector(".data");
 
 const paginationData = {
   limit: 15,
@@ -14,16 +14,16 @@ let pages;
 
 const API_URL = `${API}/pokemon/?limit=${paginationData.limit}`;
 
-const pagination = document.querySelector('.pagination');
-const modalData = document.querySelector('.modal-data');
-const modalContainer = document.querySelector('[data-modal-container]');
-const btnCloseModal = document.querySelector('[data-close-modal]');
+const pagination = document.querySelector(".pagination");
+const modalData = document.querySelector(".modal-data");
+const modalContainer = document.querySelector("[data-modal-container]");
+const btnCloseModal = document.querySelector("[data-close-modal]");
 
 const fetchPokemons = async (url = API_URL) => {
   const res = await fetch(`${url}`);
   try {
     if (!res.ok) {
-      throw new Error('Something went wrong...');
+      throw new Error("Something went wrong...");
     }
     const pokemons = await res.json();
     displayList(pokemons);
@@ -42,7 +42,7 @@ const fetchPokemons = async (url = API_URL) => {
 fetchPokemons();
 
 const getFromLocalStorage = () => {
-  const likedPokemons = localStorage.getItem('likedPokemons');
+  const likedPokemons = localStorage.getItem("likedPokemons");
   if (likedPokemons === null) {
     return [];
   }
@@ -63,23 +63,23 @@ const setToLocalStorage = (pokemon) => {
   } else {
     likedPokemonsUpdated = [...existingPokemons, { id, name }];
   }
-  localStorage.setItem('likedPokemons', JSON.stringify(likedPokemonsUpdated));
+  localStorage.setItem("likedPokemons", JSON.stringify(likedPokemonsUpdated));
 };
 
 const handleLike = (id, name) => {
   const likeBtn = document.querySelector(`[data-id="${id}"]`);
-  likeBtn.classList.toggle('fa-solid');
+  likeBtn.classList.toggle("fa-solid");
 
-  const parent = likeBtn.closest('.data');
-  const cirlce = parent.querySelector('.data__image-circle');
+  const parent = likeBtn.closest(".data");
+  const cirlce = parent.querySelector(".data__image-circle");
 
   const card = document.querySelector(`[data-name="${id}-${name}"]`);
-  card.classList.toggle('liked-background');
+  card.classList.toggle("liked-background");
 
-  cirlce.classList.toggle('liked-background');
+  cirlce.classList.toggle("liked-background");
 
-  const cardLike = card.querySelector('i');
-  cardLike.classList.toggle('hidden');
+  const cardLike = card.querySelector("i");
+  cardLike.classList.toggle("hidden");
 
   setToLocalStorage({ id, name });
 };
@@ -97,13 +97,13 @@ const getPagesAmount = (pokemonAmount, paginationData) => {
 
 const parseUrl = (url) => {
   if (url !== null) {
-    return parseInt(url.split('?')[1].split('&')[0].split('=')[1], 10);
+    return parseInt(url.split("?")[1].split("&")[0].split("=")[1], 10);
   }
 };
 
 const displayPages = ({ previous, next }) => {
   let { pageCurrent, pagesShown, limit } = paginationData;
-  let pagePrevious = '...';
+  let pagePrevious = "...";
   let pageNext;
 
   if (previous === null) {
@@ -128,14 +128,14 @@ const displayPages = ({ previous, next }) => {
 
   return `
     <button class="page-item prev-page pointer" ${
-      previous === null ? 'disabled' : ''
+      previous === null ? "disabled" : ""
     } 
     onClick='fetchPokemons("${API_URL}&offset=${prevOffset}")'><</button>
     <li class="page-item" style="display:${
-      pageCurrent >= pagesShown ? 'block' : 'none'
+      pageCurrent >= pagesShown ? "block" : "none"
     }">...</li>
     <button class="page-item pointer" style="display:${
-      !isNaN(pagePrevious) ? 'block' : 'none'
+      !isNaN(pagePrevious) ? "block" : "none"
     }"
     onClick='fetchPokemons("${API_URL}&offset=${prevOffset}")'
     >${pagePrevious}</button>
@@ -143,14 +143,14 @@ const displayPages = ({ previous, next }) => {
     <button class="page-item page-active no-pointer" >${pageCurrent}</button>
     
     <button class="page-item pointer" style="display:${
-      !isNaN(pageNext) ? 'block' : 'none'
+      !isNaN(pageNext) ? "block" : "none"
     }" onClick='fetchPokemons("${API_URL}&offset=${nextOffset}")'>${pageNext}</button>
     <li class="page-item" style="display:${
-      pageCurrent <= pages - pagesShown + 1 ? 'block' : 'none'
+      pageCurrent <= pages - pagesShown + 1 ? "block" : "none"
     }"
     >...</li>
     <button class="page-item next-page pointer" ${
-      next === null ? 'disabled' : ''
+      next === null ? "disabled" : ""
     } 
     onClick='fetchPokemons("${API_URL}&offset=${nextOffset}")'>></button>
   `;
@@ -164,19 +164,19 @@ const displayList = async ({ results }) => {
       // const pokemonURL = `https://pokeapi.co/api/v2/pokemon/${id}`;
       // const name = 'test';
 
-      const id = Number(url.split('/')[6]);
+      const id = Number(url.split("/")[6]);
       return `
       <div class="list__item ${
-        isLiked(id) ? `liked-background` : ''
+        isLiked(id) ? `liked-background` : ""
       }" onClick="fetchPokemonData('${url}')" data-name="${id}-${name}">
         <div>${name}</div>
         <i class="fa-solid fa-heart card-like ${
-          isLiked(id) ? '' : 'hidden'
+          isLiked(id) ? "" : "hidden"
         }"></i>
       </div>
     `;
     })
-    .join('');
+    .join("");
 };
 
 const fetchPokemonData = async (url) => {
@@ -198,16 +198,17 @@ const getEvolutions = ({ evolves_to }, evolutions = []) => {
 };
 
 const fetchEvolutions = async (id) => {
-  const URL = `${API}/evolution-chain/${id}`;
+  const URL = `${API}/pokemon-species/${id}`;
 
   const res = await fetch(`${URL}`);
 
   try {
     if (!res.ok) {
-      throw new Error('Something went wrong...');
+      throw new Error("Something went wrong...");
     }
-
-    const pokemons = await res.json();
+    const { evolution_chain } = await res.json();
+    const evolutionRes = await fetch(evolution_chain.url);
+    const pokemons = await evolutionRes.json();
     const evolutionArray = getEvolutions(pokemons.chain);
     handleEvolutions(evolutionArray);
   } catch (error) {
@@ -216,7 +217,7 @@ const fetchEvolutions = async (id) => {
 };
 
 const handleEvolutions = (evolutions) => {
-  modalData.innerHTML = '';
+  modalData.innerHTML = "";
 
   const promises = [];
 
@@ -240,21 +241,21 @@ const handleEvolutions = (evolutions) => {
 };
 
 const openModal = (id) => {
-  modalData.innerHTML = '';
+  modalData.innerHTML = "";
   fetchEvolutions(id);
-  modalContainer.style.display = 'block';
+  modalContainer.style.display = "block";
 };
 
 const closeModal = () => {
-  modalContainer.style.display = 'none';
+  modalContainer.style.display = "none";
 };
 
-modalContainer.addEventListener('click', (e) => {
+modalContainer.addEventListener("click", (e) => {
   const target = e.target;
 
   if (
-    target.dataset.modalContainer === '' ||
-    target.dataset.closeModal === ''
+    target.dataset.modalContainer === "" ||
+    target.dataset.closeModal === ""
   ) {
     closeModal();
   }
@@ -266,7 +267,7 @@ const displayPokemonData = (pokemon) => {
   return ` 
     <div class='data__image'>
       <div class='data__image-circle ${
-        isLiked(id) ? 'liked-background' : ''
+        isLiked(id) ? "liked-background" : ""
       }'></div>
       <img src='${img}'/>
     </div>
@@ -274,7 +275,7 @@ const displayPokemonData = (pokemon) => {
       <span class="data__id">#${id}</span>
       <span class="data__name">${name}</span>
       <i class="fa-regular ${
-        isLiked(id) ? 'fa-solid' : ''
+        isLiked(id) ? "fa-solid" : ""
       } fa-heart like" onClick="handleLike(${id}, '${name}')" data-id=${id}></i>
     </h3>
     <div class='stats'>
@@ -287,7 +288,7 @@ const displayPokemonData = (pokemon) => {
             </div>
             `;
         })
-        .join('')}
+        .join("")}
     </div>
     <div class='evolutions'><button type="button" onClick="openModal(${id})">Click to see the evolutions</button></div>
   `;
